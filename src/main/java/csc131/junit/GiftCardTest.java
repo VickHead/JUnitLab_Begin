@@ -2,8 +2,10 @@ package csc131.junit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThrows;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+import java.time.Month;
 
 public class GiftCardTest
 {
@@ -56,5 +58,30 @@ public class GiftCardTest
         
         assertEquals("deduct()",
    			 		 "Amount Due:  50.00", card.deduct(125.00));	
+	}
+	
+	@Test
+	public void IllegalArguementEsception()
+	{
+		assertThrows(IllegalArgumentException.class, () -> {new GiftCard(1,-100.00);});
+	}
+	
+	@Test
+	public void constructor_IncorrectID_Low()
+	{
+		assertThrows(IllegalArgumentException.class, () -> {new GiftCard(-1,100.00);});
+	}
+	
+	@Test
+	public void constructor_IncorrectID_High()
+	{
+		assertThrows(IllegalArgumentException.class, () -> {new GiftCard(10000,100.00);});
+	}
+	
+	@Test
+	public void valueOfTest()
+	{
+		assertSame("valueOf(DECEMBER)",
+		Month.DECEMBER, Month.valueOf("DECEMBER"));
 	}
 }
